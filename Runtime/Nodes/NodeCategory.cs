@@ -1,4 +1,4 @@
-﻿namespace Data
+﻿namespace Nodes
 {
     public enum NodeCategory
     {

@@ -1,6 +1,6 @@
-﻿using Data;
+﻿using Nodes;
 
-namespace GenericData
+namespace Heuristics
 {
     public abstract class Heuristic<T>
     {

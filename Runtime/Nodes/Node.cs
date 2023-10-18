@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GenericData
+namespace Nodes
 {
     public class Node<T>
     {
