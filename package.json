@@ -1,0 +1,15 @@
+{
+    "name": "com.sokpapageorgiou.pathfinder",
+    "version": "1.0.0",
+    "displayName": "Pathfinder",
+    "description": "Pathfinder for Unity. A*!",
+    "unity": "2022.3.9f1",
+    "dependencies": {},
+    "keywords": ["pathfind", "a*", "sokpapageorgiou"],
+    "author": 
+    {
+        "name": "Sokratis Papageorgiou",
+        "email": "hello@sokpapageorgiou.com",
+        "url": "https://www.sokpapageorgiou.com/"
+    }
+}
