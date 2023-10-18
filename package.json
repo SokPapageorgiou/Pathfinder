@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "displayName": "Pathfinder",
     "description": "Pathfinder for Unity. A*!",
-    "unity": "2022.3.9f1",
+    "unity": "2022.3",
     "dependencies": {},
     "keywords": ["pathfind", "a*", "sokpapageorgiou"],
     "author": 
