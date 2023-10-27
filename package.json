@@ -1,6 +1,6 @@
 {
     "name": "com.sokpapageorgiou.pathfinder",
-    "version": "1.0.0",
+    "version": "0.3.0",
     "displayName": "Sok.Pathfinder",
     "description": "Pathfinder for Unity. A*!",
     "unity": "2022.3",
