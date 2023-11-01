@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System;
+using Graph;
+using UnityEditor;
 using UnityEngine;
 
 namespace Editor.Graph
@@ -13,10 +15,18 @@ namespace Editor.Graph
         
         private Vector3 _nodePosition = Vector3.zero;
         
+        private readonly GraphGenerator _graphGenerator = new();
+        private readonly GraphInstantiator _graphInstantiator = new();
+        
         [MenuItem("Tools/Sok/GraphGenerator")]
         public static void ShowWindow()
         {
             GetWindow(typeof(GraphGeneratorWindow));
+        }
+
+        private void Update()
+        {
+            Repaint();
         }
 
         private void OnGUI()
@@ -31,8 +41,16 @@ namespace Editor.Graph
 
             if (GUILayout.Button("Generate"))
             {
-                
+                var graph = _graphGenerator.Generate(_graphSize * _distanceBetweenNodes);
+                _graphInstantiator.Instantiate(_graphName, graph);
             }
+            
+            var selected = Selection.activeGameObject;
+            
+            if(selected == null) return;
+
+            var graphContainer = selected.GetComponent<GraphContainer>();
+            if (graphContainer == null) return;
             
             GUILayout.Space(LayoutSpace);
             GUILayout.Label("Add Node");
