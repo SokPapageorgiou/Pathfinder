@@ -8,7 +8,7 @@ namespace Editor.Graph
         private const float LayoutSpace = 10f;
         
         private string _graphName = "New Graph";
-        private Vector3 _graphSize = Vector3.zero;
+        private Vector3 _graphSize = Vector3.one;
         private float _distanceBetweenNodes = 1.0f;
         
         private Vector3 _nodePosition = Vector3.zero;
