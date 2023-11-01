@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Graph;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Nodes
 {
@@ -25,14 +24,10 @@ namespace Nodes
             _node = node;
             _graphContainer = container;
         }
-        
-        public void UpdateConnections() 
-            => _node.Connections.ForEach(key => connections.Add(_graphContainer.Nodes[key]));
 
         private void OnDrawGizmos()
         {
             _node.Value = transform.position;
-            
             Gizmos.color = _nodeColor;
             Gizmos.DrawSphere(_node.Value, SphereRadius);
             
@@ -42,11 +37,16 @@ namespace Nodes
 
         private void OnDrawGizmosSelected()
         {
+            _node.Value = transform.position;
+            
             Gizmos.color = _nodeSelectedColor;
-            Gizmos.DrawSphere(transform.position, SphereRadius);
+            Gizmos.DrawSphere( _node.Value, SphereRadius);
             
             Gizmos.color = _connectionSelectedColor;
             _node.Connections.ForEach(connection => Gizmos.DrawLine(transform.position, connection.Value));
         }
+
+        public void GetConnections() 
+            => _node.Connections.ForEach(key => connections.Add(_graphContainer.Nodes[key]));
     }
 }

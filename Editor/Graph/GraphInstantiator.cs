@@ -15,7 +15,7 @@ namespace Editor.Graph
             
             nodes.ForEach(node => InstantiateNode(node, graphContainer, scale));
             graphContainer.Nodes.Values
-                .ToList().ForEach(node => node.UpdateConnections());
+                .ToList().ForEach(node => node.GetConnections());
         }
 
         private void InstantiateNode(Node<Vector3> node, GraphContainer parent, float scale)
