@@ -18,8 +18,8 @@ namespace Graph
         private List<Node<Vector3>> GenerateList(Vector3 size)
         {
             var nodes = new List<Node<Vector3>>();
-            
-            var nodesToAdd = 
+
+            var nodesToAdd =
                 from i in Enumerable.Range(0, (int)size.z)
                 from j in Enumerable.Range(0, (int)size.y)
                 from k in Enumerable.Range(0, (int)size.x)

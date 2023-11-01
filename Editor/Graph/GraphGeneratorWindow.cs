@@ -11,7 +11,7 @@ namespace Editor.Graph
         
         private string _graphName = "New Graph";
         private Vector3 _graphSize = Vector3.one;
-        private float _distanceBetweenNodes = 1.0f;
+        private float _scale = 1.0f;
         
         private Vector3 _nodePosition = Vector3.zero;
         
@@ -37,12 +37,12 @@ namespace Editor.Graph
             GUILayout.Label("New Graph");
             _graphName = EditorGUILayout.TextField("Graph Name", _graphName);
             _graphSize = EditorGUILayout.Vector3Field("Graph Size", _graphSize, GUILayout.ExpandWidth(true));
-            _distanceBetweenNodes = EditorGUILayout.FloatField("Distance Between Nodes", _distanceBetweenNodes);
+            _scale = EditorGUILayout.FloatField("Scale", _scale);
 
             if (GUILayout.Button("Generate"))
             {
-                var graph = _graphGenerator.Generate(_graphSize * _distanceBetweenNodes);
-                _graphInstantiator.Instantiate(_graphName, graph);
+                var graph = _graphGenerator.Generate(_graphSize);
+                _graphInstantiator.Instantiate(_graphName, graph, _scale);
             }
             
             var selected = Selection.activeGameObject;
