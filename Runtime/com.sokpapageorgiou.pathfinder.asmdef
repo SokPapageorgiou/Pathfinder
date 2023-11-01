@@ -1,3 +1,4 @@
 {
-	"name": "com.sokpapageorgiou.pathfinder"
+	"name": "com.sokpapageorgiou.pathfinder",
+	"references":[ "GUID:4d6b9adbbf84f13459b6417cf26936f8" ]
 }

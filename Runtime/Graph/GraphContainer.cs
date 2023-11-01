@@ -6,11 +6,11 @@ namespace Graph
 {
     public class GraphContainer : MonoBehaviour
     {
-        public List<Node<Vector3>> Nodes { get; private set; }
-
-        public void Initialize(List<Node<Vector3>> nodes)
+        public Dictionary<Node<Vector3>, NodeVisualization> Nodes { get; private set; } = new();
+        
+        public void AddNode(Node<Vector3> node, NodeVisualization nodeVisualization)
         {
-            Nodes = nodes;
+            Nodes.Add(node, nodeVisualization);
         }
     }
 }

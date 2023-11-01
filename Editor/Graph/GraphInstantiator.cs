@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Editor.Nodes;
+using System.Linq;
 using Graph;
 using Nodes;
 using UnityEngine;
@@ -12,19 +12,22 @@ namespace Editor.Graph
         {
             var parent = new GameObject(name);
             var graphContainer = parent.AddComponent<GraphContainer>();
-            graphContainer.Initialize(nodes);
             
-            nodes.ForEach(node => InstantiateNode(node, parent, scale));
+            nodes.ForEach(node => InstantiateNode(node, graphContainer, scale));
+            graphContainer.Nodes.Values
+                .ToList().ForEach(node => node.UpdateConnections());
         }
 
-        private void InstantiateNode(Node<Vector3> node, GameObject parent, float scale)
+        private void InstantiateNode(Node<Vector3> node, GraphContainer parent, float scale)
         {
             var instance = new GameObject("Node");
             instance.transform.SetParent(parent.transform);
             instance.transform.position = node.Value * scale;
             
             var nodeVisualization = instance.AddComponent<NodeVisualization>();
-            nodeVisualization.Initialize(node);
+            nodeVisualization.Initialize(node, parent);
+            
+            parent.AddNode(node, nodeVisualization);
         }
     }
 }

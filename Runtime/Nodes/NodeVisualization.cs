@@ -1,7 +1,9 @@
-﻿using Nodes;
+﻿using System.Collections.Generic;
+using Graph;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Editor.Nodes
+namespace Nodes
 {
     public class NodeVisualization : MonoBehaviour
     {
@@ -13,12 +15,20 @@ namespace Editor.Nodes
         private const float SphereRadius = 0.5f;
 
         private Node<Vector3> _node;
+        private GraphContainer _graphContainer;
+        
+        [SerializeField]
+        private List<NodeVisualization> connections = new ();
 
-        public void Initialize(Node<Vector3> node)
+        public void Initialize(Node<Vector3> node, GraphContainer container)
         {
             _node = node;
+            _graphContainer = container;
         }
         
+        public void UpdateConnections() 
+            => _node.Connections.ForEach(key => connections.Add(_graphContainer.Nodes[key]));
+
         private void OnDrawGizmos()
         {
             _node.Value = transform.position;

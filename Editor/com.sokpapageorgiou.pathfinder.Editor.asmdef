@@ -1,4 +1,4 @@
 {
 	"name": "com.sokpapageorgiou.pathfinder.Editor",
-	"references":[ "GUID:6c6bafff3ad5f9b41baf2b2ac7c306a3" ]
+	"references":[ "GUID:6c6bafff3ad5f9b41baf2b2ac7c306a3", "GUID:4d6b9adbbf84f13459b6417cf26936f8" ]
 }
