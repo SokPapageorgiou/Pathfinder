@@ -12,18 +12,23 @@ namespace Editor.Graph
         {
             var parent = new GameObject(name);
             var graphContainer = parent.AddComponent<GraphContainer>();
+            var nodeRefresher = new NodeRefresher(graphContainer);
             
-            nodes.ForEach(node => InstantiateNode(node, graphContainer, scale));
+            nodes.ForEach(node => InstantiateNode(node, graphContainer, scale, nodeRefresher));
+            
+            graphContainer.Nodes.Keys.ToList()
+                .ForEach(node => nodeRefresher.RefreshConnectionsFromNode(node, graphContainer.Nodes[node]));
         }
 
-        private void InstantiateNode(Node<Vector3> node, GraphContainer parent, float scale)
+        private void InstantiateNode(Node<Vector3> node, GraphContainer parent, float scale, 
+            NodeRefresher nodeRefresher)
         {
             var instance = new GameObject("Node");
             instance.transform.SetParent(parent.transform);
             instance.transform.position = node.Value * scale;
             
             var nodeVisualization = instance.AddComponent<NodeVisualization>();
-            nodeVisualization.Initialize(node, parent);
+            nodeVisualization.Initialize(node, nodeRefresher);
             
             parent.AddNode(node, nodeVisualization);
         }
