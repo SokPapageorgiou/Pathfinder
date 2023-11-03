@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Graph;
+using Nodes;
 using UnityEditor;
 using UnityEngine;
 
@@ -67,6 +70,9 @@ namespace Editor.Graph
 
             if (GUILayout.Button("Add Node"))
             {
+                var newNode = new Node<Vector3>(_nodePosition,
+                    new List<Node<Vector3>> {graphContainer.Nodes.First().Key});
+                _graphInstantiator.InstantiateNode(newNode, graphContainer);
             }
         }
     }

@@ -51,6 +51,12 @@ namespace Nodes
         {
             CleanUpConnections();
             _nodeRefresher.RefreshPosition(_node, this);
+            
+            if (_node.Connections.Count > connections.Count)
+            {
+                _nodeRefresher.RefreshConnectionsFromNode(_node, this);
+            }
+            
             _nodeRefresher.RefreshConnectionsToNode(_node, connections);
         }
         
