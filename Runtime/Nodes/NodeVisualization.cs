@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Nodes
 
         private Node<Vector3> _node;
         private NodeRefresher _nodeRefresher;
+        private bool _initialRefresh = true;
         
         [SerializeField]
         private List<NodeVisualization> connections = new ();
@@ -23,6 +25,11 @@ namespace Nodes
         {
             _node = node;
             _nodeRefresher = nodeRefresher;
+        }
+
+        private void Start()
+        {
+            _nodeRefresher.RefreshConnectionsFromNode(_node, this);
         }
 
         private void OnDrawGizmos()
@@ -49,15 +56,17 @@ namespace Nodes
 
         private void RefreshNode()
         {
-            CleanUpConnections();
-            _nodeRefresher.RefreshPosition(_node, this);
-            
-            if (_node.Connections.Count > connections.Count)
+            if(_initialRefresh)
             {
                 _nodeRefresher.RefreshConnectionsFromNode(_node, this);
+                _initialRefresh = false;
             }
-            
-            _nodeRefresher.RefreshConnectionsToNode(_node, connections);
+            else
+            {
+                CleanUpConnections();
+                _nodeRefresher.RefreshPosition(_node, this);
+                _nodeRefresher.RefreshConnectionsToNode(_node, connections);  
+            }
         }
         
         private void CleanUpConnections() 
