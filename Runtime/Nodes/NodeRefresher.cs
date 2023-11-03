@@ -23,6 +23,12 @@ namespace Nodes
 
         public void RefreshConnectionsToNode(Node<Vector3> node, List<NodeVisualization> connections)
         {
+            var equalCount = connections.Count == node.Connections.Count;
+            var equalConnections = connections.All(connection => node.Connections
+                .Any(nodeConnection => nodeConnection.Value == connection.transform.position));
+            
+            if(equalCount && equalConnections) return;
+            
             node.Connections.Clear();
             
             connections.ForEach(connection => node.Connections

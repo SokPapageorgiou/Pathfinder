@@ -55,17 +55,13 @@ namespace Nodes
             }
             
             CleanUpConnections();
-
-            if (_node.Connections.Count != connections.Count)
-            {
-                _nodeRefresher.RefreshConnectionsToNode(_node, connections);
-            }
+            _nodeRefresher.RefreshConnectionsToNode(_node, connections);
         }
         
         private void CleanUpConnections() 
             => connections.Where(connection => connection == null).ToList()
                 .ForEach(connection => connections.Remove(connection));
-        
+
         public void AddConnections(IEnumerable<NodeVisualization> nodeVisualization)
         {
             connections.Clear();
