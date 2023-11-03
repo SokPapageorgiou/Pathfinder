@@ -16,7 +16,6 @@ namespace Nodes
 
         private Node<Vector3> _node;
         private NodeRefresher _nodeRefresher;
-        private bool _initialRefresh = true;
         
         [SerializeField]
         private List<NodeVisualization> connections = new ();
@@ -25,11 +24,6 @@ namespace Nodes
         {
             _node = node;
             _nodeRefresher = nodeRefresher;
-        }
-
-        private void Start()
-        {
-            _nodeRefresher.RefreshConnectionsFromNode(_node, this);
         }
 
         private void OnDrawGizmos()
@@ -56,10 +50,9 @@ namespace Nodes
 
         private void RefreshNode()
         {
-            if(_initialRefresh)
+            if(connections.Count == 0) 
             {
                 _nodeRefresher.RefreshConnectionsFromNode(_node, this);
-                _initialRefresh = false;
             }
             else
             {
