@@ -4,7 +4,6 @@ using Graph;
 using Nodes;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Editor.Graph
 {
