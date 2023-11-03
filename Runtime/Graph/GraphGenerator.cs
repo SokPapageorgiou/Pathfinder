@@ -34,7 +34,7 @@ namespace Graph
 
         private void SetDefaultConnections(Node<Vector3> targetNode, IReadOnlyCollection<Node<Vector3>> nodes)
         {
-            List<Node<Vector3>> possibleConnections = new List<Node<Vector3>>
+            var possibleConnections = new List<Node<Vector3>>
             {
                 GetFromPosition(targetNode.Value + Vector3.right, nodes),
                 GetFromPosition(targetNode.Value + Vector3.up, nodes),
