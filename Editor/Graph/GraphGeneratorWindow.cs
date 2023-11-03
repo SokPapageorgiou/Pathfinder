@@ -33,6 +33,12 @@ namespace Editor.Graph
         {
             GUILayout.Label("Graph Generator", EditorStyles.boldLabel);
             
+            ShowGraphCreator();
+            ShowAddNode();
+        }
+
+        private void ShowGraphCreator()
+        {
             GUILayout.Space(LayoutSpace);
             GUILayout.Label("New Graph");
             _graphName = EditorGUILayout.TextField("Graph Name", _graphName);
@@ -44,21 +50,23 @@ namespace Editor.Graph
                 var graph = _graphGenerator.Generate(_graphSize);
                 _graphInstantiator.Instantiate(_graphName, graph, _scale);
             }
-            
+        }
+
+        private void ShowAddNode()
+        {
             var selected = Selection.activeGameObject;
-            
-            if(selected == null) return;
+
+            if (selected == null) return;
 
             var graphContainer = selected.GetComponent<GraphContainer>();
             if (graphContainer == null) return;
-            
+
             GUILayout.Space(LayoutSpace);
             GUILayout.Label("Add Node");
             _nodePosition = EditorGUILayout.Vector3Field("Node Position", _nodePosition);
 
             if (GUILayout.Button("Add Node"))
             {
-                
             }
         }
     }
