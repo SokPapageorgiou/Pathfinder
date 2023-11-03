@@ -4,6 +4,7 @@ using Graph;
 using Nodes;
 using UnityEditor;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Editor.Graph
 {
@@ -16,7 +17,8 @@ namespace Editor.Graph
         private float _scale = 1.0f;
         
         private Vector3 _nodePosition = Vector3.zero;
-        
+        private NodeVisualization _defaultConnection;
+
         private readonly GraphGenerator _graphGenerator = new();
         private readonly GraphInstantiator _graphInstantiator = new();
         
@@ -66,13 +68,32 @@ namespace Editor.Graph
             GUILayout.Space(LayoutSpace);
             GUILayout.Label("Add Node");
             _nodePosition = EditorGUILayout.Vector3Field("Node Position", _nodePosition);
+            _defaultConnection = EditorGUILayout.ObjectField("Default Connection",_defaultConnection, 
+                    typeof(NodeVisualization), true) as NodeVisualization; ;
 
             if (GUILayout.Button("Add Node"))
             {
+                var connection = GetDefaultConnection(graphContainer);
                 var newNode = new Node<Vector3>(_nodePosition,
-                    new List<Node<Vector3>> {graphContainer.Nodes.First().Key});
+                    new List<Node<Vector3>> {connection});
                 _graphInstantiator.InstantiateNode(newNode, graphContainer);
             }
+        }
+
+        private Node<Vector3> GetDefaultConnection(GraphContainer graphContainer)
+        {
+            Node<Vector3> connection;
+            if (_defaultConnection == null)
+            {
+                connection = graphContainer.Nodes.Keys.First();
+            }
+            else
+            {
+                connection = graphContainer.Nodes
+                    .FirstOrDefault(node => node.Value == _defaultConnection).Key;
+            }
+
+            return connection;
         }
     }
 }
