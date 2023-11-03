@@ -14,8 +14,12 @@ namespace Nodes
             _graphContainer = graphContainer;
         }
 
-        public void RefreshPosition(Node<Vector3>node, NodeVisualization nodeVisualization) 
-            => node.Value = nodeVisualization.transform.position;
+        public void RefreshPosition(Node<Vector3> node, NodeVisualization nodeVisualization)
+        {
+            if(node.Value == nodeVisualization.transform.position) return;
+            
+            node.Value = nodeVisualization.transform.position;
+        } 
         
         public void RefreshConnectionsFromNode(Node<Vector3>node, NodeVisualization nodeVisualization) 
             => nodeVisualization.AddConnections( node.Connections

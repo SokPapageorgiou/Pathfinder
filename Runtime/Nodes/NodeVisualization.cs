@@ -49,12 +49,8 @@ namespace Nodes
 
         private void RefreshNode()
         {
-            if (_node.Value != transform.position)
-            {
-                _nodeRefresher.RefreshPosition(_node, this);
-            }
-            
             CleanUpConnections();
+            _nodeRefresher.RefreshPosition(_node, this);
             _nodeRefresher.RefreshConnectionsToNode(_node, connections);
         }
         
