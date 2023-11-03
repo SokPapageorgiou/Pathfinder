@@ -48,11 +48,10 @@ namespace Editor.Graph
             _graphSize = EditorGUILayout.Vector3Field("Graph Size", _graphSize, GUILayout.ExpandWidth(true));
             _scale = EditorGUILayout.FloatField("Scale", _scale);
 
-            if (GUILayout.Button("Generate"))
-            {
-                var graph = _graphGenerator.Generate(_graphSize);
-                _graphInstantiator.Instantiate(_graphName, graph, _scale);
-            }
+            if (!GUILayout.Button("Generate")) return;
+            
+            var graph = _graphGenerator.Generate(_graphSize);
+            _graphInstantiator.Instantiate(_graphName, graph, _scale);
         }
 
         private void ShowAddNode()
@@ -70,13 +69,12 @@ namespace Editor.Graph
             _defaultConnection = EditorGUILayout.ObjectField("Default Connection",_defaultConnection, 
                     typeof(NodeVisualization), true) as NodeVisualization; ;
 
-            if (GUILayout.Button("Add Node"))
-            {
-                var connection = GetDefaultConnection(graphContainer);
-                var newNode = new Node<Vector3>(_nodePosition,
-                    new List<Node<Vector3>> {connection});
-                _graphInstantiator.InstantiateNode(newNode, graphContainer);
-            }
+            if (!GUILayout.Button("Add Node")) return;
+            
+            var connection = GetDefaultConnection(graphContainer);
+            var newNode = new Node<Vector3>(_nodePosition,
+                new List<Node<Vector3>> {connection});
+            _graphInstantiator.InstantiateNode(newNode, graphContainer);
         }
 
         private Node<Vector3> GetDefaultConnection(GraphContainer graphContainer)
