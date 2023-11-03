@@ -25,14 +25,6 @@ namespace Nodes
             => nodeVisualization.AddConnections( node.Connections
                 .Select(nodeConnection => _graphContainer.Nodes[nodeConnection]).ToList());
 
-        public void RefreshConnectionsFromNode(Node<Vector3> node, 
-            NodeVisualization nodeVisualization, List<NodeVisualization> connections)
-        {
-            if(node.Connections.Count == connections.Count) return;
-            
-            RefreshConnectionsFromNode(node, nodeVisualization);
-        }
-
         public void RefreshConnectionsToNode(Node<Vector3> node, List<NodeVisualization> connections)
         {
             var equalCount = connections.Count == node.Connections.Count;
