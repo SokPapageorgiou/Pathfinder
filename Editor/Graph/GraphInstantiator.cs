@@ -24,7 +24,7 @@ namespace Editor.Graph
 
         public void InstantiateNode(Node<Vector3> node, GraphContainer parent, float scale = 1f)
         {
-            var instance = new GameObject("Node");
+            var instance = new GameObject($"Node_{parent.Nodes.Count}");
             instance.transform.SetParent(parent.transform);
             instance.transform.position = node.Value * scale;
             
