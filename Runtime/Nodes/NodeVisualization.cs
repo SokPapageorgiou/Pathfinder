@@ -57,7 +57,7 @@ namespace Nodes
             else
             {
                 CleanUpConnections();
-                _nodeRefresher.RefreshPosition(_node, this);
+                NodeRefresher.RefreshPosition(_node, this);
                 _nodeRefresher.RefreshConnectionsToNode(_node, connections);  
             }
         }

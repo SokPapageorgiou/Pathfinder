@@ -18,7 +18,6 @@ namespace Editor.Graph
         private Vector3 _nodePosition = Vector3.zero;
         private NodeVisualization _defaultConnection;
 
-        private readonly GraphGenerator _graphGenerator = new();
         private readonly GraphInstantiator _graphInstantiator = new();
         
         [MenuItem("Tools/Sok/GraphGenerator")]
@@ -50,7 +49,7 @@ namespace Editor.Graph
 
             if (!GUILayout.Button("Generate")) return;
             
-            var graph = _graphGenerator.Generate(_graphSize);
+            var graph = GraphGenerator.Generate(_graphSize);
             _graphInstantiator.Instantiate(_graphName, graph, _scale);
         }
 

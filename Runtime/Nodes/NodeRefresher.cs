@@ -14,7 +14,7 @@ namespace Nodes
             _graphContainer = graphContainer;
         }
 
-        public void RefreshPosition(Node<Vector3> node, NodeVisualization nodeVisualization)
+        public static void RefreshPosition(Node<Vector3> node, NodeVisualization nodeVisualization)
         {
             if(node.Value == nodeVisualization.transform.position) return;
             
