@@ -14,29 +14,29 @@ namespace Nodes
             _graphContainer = graphContainer;
         }
 
-        public static void RefreshPosition(Node<Vector3> node, NodeVisualization nodeVisualization)
+        public static void RefreshPosition(Node node, NodeVisualization nodeVisualization)
         {
-            if(node.Value == nodeVisualization.transform.position) return;
+            if(node.Position == nodeVisualization.transform.position) return;
             
-            node.Value = nodeVisualization.transform.position;
-        } 
-        
-        public void RefreshConnectionsFromNode(Node<Vector3>node, NodeVisualization nodeVisualization) 
-            => nodeVisualization.AddConnections( node.Connections
-                .Select(nodeConnection => _graphContainer.Nodes[nodeConnection]).ToList());
+            node.Position = nodeVisualization.transform.position;
+        }
 
-        public void RefreshConnectionsToNode(Node<Vector3> node, List<NodeVisualization> connections)
+        public void RefreshConnectionsFromNode(Node node, NodeVisualization nodeVisualization)
+            => nodeVisualization.AddConnections(_graphContainer.Nodes.FirstOrDefault(item => item == node)?.Connections);
+
+        public void RefreshConnectionsToNode(Node node, List<NodeVisualization> connections)
         {
             var equalCount = connections.Count == node.Connections.Count;
             var equalConnections = connections.All(connection => node.Connections
-                .Any(nodeConnection => nodeConnection.Value == connection.transform.position));
+                .Any(nodeConnection => nodeConnection.Value.Position == connection.transform.position));
             
             if(equalCount && equalConnections) return;
             
             node.Connections.Clear();
-            
-            connections.ForEach(connection => node.Connections
-                .Add(_graphContainer.Nodes.First(pair => pair.Value == connection).Key));
+
+            node.Connections.AddRange(connections
+                .Select(nodeVisualization => new NodeConnection(_graphContainer.Nodes
+                    .FirstOrDefault(item => item.Visualization == nodeVisualization))));
         }
     }
 }

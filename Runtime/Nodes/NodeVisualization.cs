@@ -13,13 +13,13 @@ namespace Nodes
         
         private const float SphereRadius = 0.5f;
 
-        private Node<Vector3> _node;
+        private Node _node;
         private NodeRefresher _nodeRefresher;
         
         [SerializeField]
-        private List<NodeVisualization> connections = new ();
+        private List<NodeConnection> connections = new ();
 
-        public void Initialize(Node<Vector3> node, NodeRefresher nodeRefresher)
+        public void Initialize(Node node, NodeRefresher nodeRefresher)
         {
             _node = node;
             _nodeRefresher = nodeRefresher;
@@ -30,10 +30,10 @@ namespace Nodes
             RefreshNode();
             
             Gizmos.color = _nodeColor;
-            Gizmos.DrawSphere(_node.Value, SphereRadius);
+            Gizmos.DrawSphere(_node.Position, SphereRadius);
             
             Gizmos.color = _connectionColor;
-            _node.Connections.ForEach(connection => Gizmos.DrawLine(transform.position, connection.Value));
+            _node.Connections.ForEach(connection => Gizmos.DrawLine(transform.position, connection.Value.Position));
         }
 
         private void OnDrawGizmosSelected()
@@ -41,10 +41,10 @@ namespace Nodes
             RefreshNode();
             
             Gizmos.color = _nodeSelectedColor;
-            Gizmos.DrawSphere( _node.Value, SphereRadius);
+            Gizmos.DrawSphere( _node.Position, SphereRadius);
             
             Gizmos.color = _connectionSelectedColor;
-            _node.Connections.ForEach(connection => Gizmos.DrawLine(transform.position, connection.Value));
+            _node.Connections.ForEach(connection => Gizmos.DrawLine(transform.position, connection.Value.Position));
         }
 
         private void RefreshNode()
@@ -57,15 +57,16 @@ namespace Nodes
             {
                 CleanUpConnections();
                 NodeRefresher.RefreshPosition(_node, this);
-                _nodeRefresher.RefreshConnectionsToNode(_node, connections);  
+                _nodeRefresher.RefreshConnectionsToNode(_node, connections
+                    .Select(connection => connection.Value.Visualization).ToList());  
             }
         }
         
         private void CleanUpConnections() 
-            => connections.Where(connection => connection == null).ToList()
+            => connections.Where(connection => connection.Value == null).ToList()
                 .ForEach(connection => connections.Remove(connection));
 
-        public void AddConnections(IEnumerable<NodeVisualization> nodeVisualization)
+        public void AddConnections(IEnumerable<NodeConnection> nodeVisualization)
         {
             connections.Clear();
             connections.AddRange(nodeVisualization);

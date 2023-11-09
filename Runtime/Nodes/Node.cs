@@ -1,16 +1,20 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Nodes
 {
-    public class Node<T>
+    public class Node
     {
-        public T Value { get; set; }
-        public List<Node<T>> Connections { get; private set; }
+        public Vector3 Position { get; set; }
+        public NodeVisualization Visualization { get; private set; }
+        public List<NodeConnection> Connections { get; set; } = new();
 
-        public Node(T value, List<Node<T>> connections)
+        public Node(Vector3 position)
         {
-            Value = value;
-            Connections = connections;
+            Position = position;
         }
+        
+        public void SetVisualization(NodeVisualization visualization) => Visualization = visualization;
+        
     }
 }

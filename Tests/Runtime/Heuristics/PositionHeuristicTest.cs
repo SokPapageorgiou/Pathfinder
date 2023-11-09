@@ -12,7 +12,7 @@ namespace Tests.Runtime.Heuristics
         [SetUp]
         public void SetUp()
         {
-            var goalNode = new Node<Vector3>(new Vector3(10,0,0), null);
+            var goalNode = new Node(new Vector3(10,0,0));
 
             _positionHeuristic = new PositionHeuristic(goalNode);
         }
@@ -20,7 +20,7 @@ namespace Tests.Runtime.Heuristics
         [Test]
         public void Estimate_WhenCalledWithNode_ReturnsDistanceBetweenNodeAndGoalNode()
         {
-            var node = new Node<Vector3>(new Vector3(0,0,0), null);
+            var node = new Node(new Vector3(0,0,0));
             
             var result = _positionHeuristic.Estimate(node);
             
@@ -30,8 +30,8 @@ namespace Tests.Runtime.Heuristics
         [Test]
         public void Estimate_WhenCalledWithTwoNodes_ReturnsDistanceBetweenNodes()
         {
-            var fromNode = new Node<Vector3>(new Vector3(0,0,0), null);
-            var toNode = new Node<Vector3>(new Vector3(5,0,0), null);
+            var fromNode = new Node(new Vector3(0,0,0));
+            var toNode = new Node(new Vector3(5,0,0));
             
             var result = _positionHeuristic.Estimate(fromNode, toNode);
             

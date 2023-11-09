@@ -7,7 +7,7 @@ namespace Graph
 {
     public class GraphGenerator
     {
-        public static List<Node<Vector3>> Generate(Vector3 size)
+        public static List<Node> Generate(Vector3 size)
         {
             var nodes = GenerateList(size);
             nodes.ForEach(node => SetDefaultConnections(node, nodes));
@@ -15,16 +15,16 @@ namespace Graph
             return nodes;
         }
 
-        private static List<Node<Vector3>> GenerateList(Vector3 size)
+        private static List<Node> GenerateList(Vector3 size)
         {
-            var nodes = new List<Node<Vector3>>();
+            var nodes = new List<Node>();
 
             var nodesToAdd =
                 from i in Enumerable.Range(0, (int)size.z)
                 from j in Enumerable.Range(0, (int)size.y)
                 from k in Enumerable.Range(0, (int)size.x)
                 let nodePosition = new Vector3(k, j, i)
-                let node = new Node<Vector3>(nodePosition, new List<Node<Vector3>>())
+                let node = new Node(nodePosition)
                 select node;
 
             nodes.AddRange(nodesToAdd);
@@ -32,27 +32,27 @@ namespace Graph
             return nodes;
         }
 
-        private static void SetDefaultConnections(Node<Vector3> targetNode, IReadOnlyCollection<Node<Vector3>> nodes)
+        private static void SetDefaultConnections(Node targetNode, IReadOnlyCollection<Node> nodes)
         {
-            var possibleConnections = new List<Node<Vector3>>
+            var possibleConnections = new List<Node>
             {
-                GetFromPosition(targetNode.Value + Vector3.right, nodes),
-                GetFromPosition(targetNode.Value + Vector3.up, nodes),
-                GetFromPosition(targetNode.Value + Vector3.forward, nodes)
+                GetFromPosition(targetNode.Position + Vector3.right, nodes),
+                GetFromPosition(targetNode.Position + Vector3.up, nodes),
+                GetFromPosition(targetNode.Position + Vector3.forward, nodes)
             };
 
             possibleConnections.ForEach(node => AddMutualConnection(targetNode, node));
         }
         
-        private static void AddMutualConnection(Node<Vector3> nodeA, Node<Vector3> nodeB)
+        private static void AddMutualConnection(Node nodeA, Node nodeB)
         {
             if(nodeA == null || nodeB == null) return;
             
-            nodeA.Connections.Add(nodeB);
-            nodeB.Connections.Add(nodeA);
+            nodeA.Connections.Add(new NodeConnection(nodeB));
+            nodeB.Connections.Add(new NodeConnection(nodeA));
         }
         
-        private static Node<Vector3> GetFromPosition(Vector3 position, IEnumerable<Node<Vector3>> nodes) 
-            => nodes.FirstOrDefault(node => node.Value == position);
+        private static Node GetFromPosition(Vector3 position, IEnumerable<Node> nodes) 
+            => nodes.FirstOrDefault(node => node.Position == position);
     }
 }

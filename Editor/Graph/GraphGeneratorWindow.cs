@@ -71,22 +71,21 @@ namespace Editor.Graph
             if (!GUILayout.Button("Add Node")) return;
             
             var connection = GetDefaultConnection(graphContainer);
-            var newNode = new Node<Vector3>(_nodePosition,
-                new List<Node<Vector3>> {connection});
+            var newNode = new Node(_nodePosition);
             _graphInstantiator.InstantiateNode(newNode, graphContainer);
         }
 
-        private Node<Vector3> GetDefaultConnection(GraphContainer graphContainer)
+        private Node GetDefaultConnection(GraphContainer graphContainer)
         {
-            Node<Vector3> connection;
+            Node connection;
             if (_defaultConnection == null)
             {
-                connection = graphContainer.Nodes.Keys.First();
+                connection = graphContainer.Nodes.First();
             }
             else
             {
                 connection = graphContainer.Nodes
-                    .FirstOrDefault(node => node.Value == _defaultConnection).Key;
+                    .FirstOrDefault(node => node.Visualization == _defaultConnection);
             }
 
             return connection;
